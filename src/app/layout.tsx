@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, IBM_Plex_Mono, Outfit } from "next/font/google";
 import { house } from "@/lib/catalog";
 import "./globals.css";
@@ -56,6 +56,14 @@ export const metadata: Metadata = {
     description: house.line,
     images: ["/og.jpg"],
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: "#110e0b",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

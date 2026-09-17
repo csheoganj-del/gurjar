@@ -11,12 +11,15 @@ export function SiteFrame({ quiet = false }: { quiet?: boolean }) {
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 bg-gradient-to-b from-ink/80 via-ink/25 to-transparent">
-      <div className="pointer-events-auto flex items-start justify-between gap-6 px-5 pt-5 sm:px-8 sm:pt-7">
-        <Link href="/" className="group block">
-          <p className="font-mono text-[10px] tracking-[0.42em] text-brass uppercase">
+      <div
+        className="pointer-events-auto flex items-start justify-between gap-4 px-5 sm:px-8 sm:pt-7"
+        style={{ paddingTop: "max(1.15rem, env(safe-area-inset-top))" }}
+      >
+        <Link href="/" className="group block min-w-0">
+          <p className="font-mono text-[9px] tracking-[0.28em] text-brass uppercase sm:text-[10px] sm:tracking-[0.42em]">
             {house.experience}
           </p>
-          <p className="font-serif text-[28px] leading-none tracking-[0.18em] text-ivory uppercase sm:text-[32px]">
+          <p className="font-serif text-[26px] leading-none tracking-[0.12em] text-ivory uppercase sm:text-[32px] sm:tracking-[0.18em]">
             {house.name}
           </p>
         </Link>

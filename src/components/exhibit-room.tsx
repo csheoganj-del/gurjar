@@ -16,28 +16,28 @@ export function ExhibitRoom({ product }: { product: Product }) {
   const related = relatedProducts(product);
 
   return (
-    <div className="min-h-[100dvh] bg-ink">
+    <div className="min-h-[100dvh] overflow-x-hidden bg-ink">
       <SiteFrame quiet />
       <Grain />
       <Cursor />
 
       <article>
         <section className="grid min-h-[100dvh] lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="exhibit-hero relative min-h-[70vh] lg:min-h-[100dvh]">
+          <div className="exhibit-hero relative h-[46vh] min-h-[240px] sm:h-[56vh] lg:h-auto lg:min-h-[100dvh]">
             <img
               src={product.exhibitImage}
               alt={product.name}
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-contain p-6 lg:object-cover lg:p-0"
             />
           </div>
-          <div className="flex flex-col justify-end px-5 py-16 sm:px-10 lg:px-14 lg:py-28">
-            <p className="font-mono text-[10px] tracking-[0.36em] text-brass uppercase">
+          <div className="flex flex-col justify-end px-5 pb-10 pt-8 sm:px-10 sm:py-16 lg:px-14 lg:py-28">
+            <p className="font-mono text-[10px] tracking-[0.24em] text-brass uppercase">
               {category?.index}  ·  {category?.label}  ·  {product.status}
             </p>
-            <p className="mt-6 font-serif text-xl italic text-ivory/70">
+            <p className="mt-4 font-serif text-lg italic text-ivory/70 sm:mt-6 sm:text-xl">
               {product.maker}
             </p>
-            <h1 className="mt-2 font-serif text-5xl leading-[0.92] text-ivory sm:text-6xl">
+            <h1 className="mt-2 font-serif text-4xl leading-tight text-balance text-ivory sm:text-5xl lg:text-6xl lg:leading-[0.92]">
               {product.name}
             </h1>
             {product.priceLabel ? (
@@ -45,7 +45,7 @@ export function ExhibitRoom({ product }: { product: Product }) {
                 {product.priceLabel}
               </p>
             ) : null}
-            <p className="mt-8 max-w-md text-[17px] leading-relaxed text-ivory/80">
+            <p className="mt-5 max-w-md text-[16px] leading-relaxed text-ivory/80 sm:mt-8 sm:text-[17px]">
               {product.note}
             </p>
             {product.recommendation ? (
@@ -53,7 +53,7 @@ export function ExhibitRoom({ product }: { product: Product }) {
                 {product.recommendation}
               </p>
             ) : null}
-            <div className="mt-10 flex flex-wrap items-center gap-5">
+            <div className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10 sm:gap-5">
               {product.buyUrl ? (
                 <a
                   href={product.buyUrl}
@@ -82,7 +82,7 @@ export function ExhibitRoom({ product }: { product: Product }) {
               <p className="font-mono text-[10px] tracking-[0.32em] text-brass uppercase">
                 Other rooms in this decision
               </p>
-              <h2 className="mt-3 font-serif text-4xl text-ivory">
+              <h2 className="mt-3 font-serif text-3xl text-ivory sm:text-4xl">
                 Alternatives, by commitment.
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-ivory/65">

@@ -37,6 +37,7 @@
 html,
 body {
   min-height: 100%;
+  max-width: 100%;
   background: var(--ink);
   color: var(--ivory);
 }
@@ -250,6 +251,7 @@ img {
 .mobile-snap {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-snap section {
