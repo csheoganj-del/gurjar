@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { categories, products } from "@/lib/catalog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const origin = "https://gurjar.world";
+  const origin = "https://mansinghgurjar.in";
   return [
     { url: origin, priority: 1 },
     ...categories.map((category) => ({

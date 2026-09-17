@@ -23,6 +23,8 @@ const mono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const siteUrl = "https://mansinghgurjar.in";
+
 export const metadata: Metadata = {
   title: {
     default: `${house.name} — ${house.experience}`,
@@ -30,11 +32,29 @@ export const metadata: Metadata = {
   },
   description:
     "The Private Table: a personal universe of finance, business, lifestyle, tech, and original software. Objects as decisions.",
-  metadataBase: new URL("https://gurjar.world"),
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: siteUrl },
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: siteUrl,
+    siteName: house.name,
     title: `${house.name} — ${house.experience}`,
     description: house.line,
-    images: ["/world/table-composed.jpg"],
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "The Private Table — Gurjar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${house.name} — ${house.experience}`,
+    description: house.line,
+    images: ["/og.jpg"],
   },
 };
 
