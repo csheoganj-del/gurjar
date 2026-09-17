@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gurjar — The Private Table
 
-## Getting Started
+A personal-brand universe for Man Singh Gurjar: finance, business, lifestyle, tech, and original Mac software.
 
-First, run the development server:
+This is not a portfolio, a shop, or a blog. The homepage is an **Infinite Table** — objects as navigation. Deeper pages are a **Museum of Decisions**: chosen things, presented as exhibits, with budget-tier alternatives.
+
+## Run
 
 ```bash
+cd gurjar
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` — Infinite Table (desktop dock-magnification + mobile scroll)
+- `/world/[category]` — showroom for a pillar
+- `/exhibit/[slug]` — product as exhibit, with alternatives
 
-## Learn More
+Content lives in `src/lib/catalog.ts`. Photography lives in `public/world`, `public/objects`, and `public/exhibits`.
 
-To learn more about Next.js, take a look at the following resources:
+## Adding a product
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Add an entry to `products` in `src/lib/catalog.ts`.
+2. Optional `table` placement puts it on the homepage.
+3. Drop still-life and exhibit images into `public/`.
+4. Fill `alternatives` with four commitment tiers: entry, considered, committed, the piece.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Original software
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`TABLE` (`/exhibit/table-app`) is the first original Mac product — forthcoming. The software world is built to grow from recommended tools into launch pages without changing the language of the site.
