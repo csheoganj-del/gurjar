@@ -62,52 +62,60 @@ export function MobileTable() {
         <section
           key={product.slug}
           data-index={index + 1}
-          className="relative flex min-h-[100dvh] flex-col justify-end px-5 pb-24 pt-24"
+          className="relative flex min-h-[100dvh] flex-col justify-end px-5 pb-32 pt-24"
         >
           <div
-            className="absolute inset-0"
+            className="pointer-events-none absolute inset-0"
             style={{
               backgroundImage: "url('/world/table-mobile.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/10" />
-          <img
-            src={product.objectImage}
-            alt=""
-            className="pointer-events-none absolute inset-x-0 top-16 mx-auto h-[52vh] w-auto object-contain transition-[transform,filter] duration-700"
-            style={{
-              transform:
-                active === index + 1
-                  ? "scale(1.04) translateY(-10px)"
-                  : "scale(0.94) translateY(0)",
-              filter:
-                active === index + 1
-                  ? "drop-shadow(18px 28px 22px rgba(12,8,4,0.48))"
-                  : "drop-shadow(8px 12px 10px rgba(12,8,4,0.38))",
-            }}
-          />
-          <div className="relative">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/10" />
+          <Link
+            href={`/exhibit/${product.slug}`}
+            className="absolute inset-x-0 top-14 z-20 flex h-[48vh] items-center justify-center"
+            aria-label={`Open ${product.name}`}
+          >
+            <img
+              src={product.objectImage}
+              alt={product.name}
+              className="h-full w-auto max-w-[88%] object-contain transition-[transform,filter] duration-700"
+              style={{
+                transform:
+                  active === index + 1
+                    ? "scale(1.04) translateY(-10px)"
+                    : "scale(0.94) translateY(0)",
+                filter:
+                  active === index + 1
+                    ? "drop-shadow(18px 28px 22px rgba(12,8,4,0.48))"
+                    : "drop-shadow(8px 12px 10px rgba(12,8,4,0.38))",
+              }}
+            />
+          </Link>
+          <div className="relative z-20">
             <p className="font-mono text-[10px] tracking-[0.36em] text-brass uppercase">
               {String(index + 1).padStart(2, "0")}  /  {product.category}
             </p>
-            <h2 className="mt-2 font-serif text-4xl leading-none text-ivory">
-              {product.name}
-            </h2>
+            <Link href={`/exhibit/${product.slug}`}>
+              <h2 className="mt-2 font-serif text-4xl leading-none text-ivory">
+                {product.name}
+              </h2>
+            </Link>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-ivory/70">
               {product.note}
             </p>
-            <div className="mt-6 flex gap-5">
+            <div className="mt-6 flex flex-wrap items-center gap-4">
               <Link
                 href={`/exhibit/${product.slug}`}
-                className="border-b border-brass pb-1 font-mono text-[10px] tracking-[0.28em] text-brass uppercase"
+                className="inline-flex min-h-12 items-center border border-brass px-5 py-3 font-mono text-[10px] tracking-[0.28em] text-brass uppercase"
               >
                 Open exhibit
               </Link>
               <Link
                 href={`/world/${product.category}`}
-                className="font-mono text-[10px] tracking-[0.28em] text-ivory/70 uppercase"
+                className="inline-flex min-h-12 items-center font-mono text-[10px] tracking-[0.28em] text-ivory/70 uppercase"
               >
                 The {product.category} room
               </Link>

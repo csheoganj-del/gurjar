@@ -111,6 +111,26 @@ export function InfiniteTable() {
     };
   };
 
+  const onTouchOpen = (event: React.PointerEvent) => {
+    if (event.pointerType === "mouse") return;
+    if ((event.target as HTMLElement | null)?.closest?.("[data-object]")) return;
+    const rect = root.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    let nearest = objects[0];
+    let best = 999;
+    for (const product of objects) {
+      const place = product.table!;
+      const dist = Math.hypot(x - place.x, y - place.y);
+      if (dist < best) {
+        best = dist;
+        nearest = product;
+      }
+    }
+    if (nearest && best < 22) router.push(`/exhibit/${nearest.slug}`);
+  };
+
   const hovered = objects.find((item) => item.slug === hover);
   const hoveredCategory = hovered ? getCategory(hovered.category) : null;
 
@@ -118,6 +138,7 @@ export function InfiniteTable() {
     <div
       ref={root}
       onPointerMove={onPointer}
+      onPointerUp={onTouchOpen}
       onPointerLeave={() => {
         pointer.current = { x: 0.5, y: 0.42 };
         setHover(null);

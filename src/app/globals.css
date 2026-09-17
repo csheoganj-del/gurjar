@@ -265,7 +265,7 @@ img {
   display: block;
 }
 
-@media (max-width: 900px), (pointer: coarse) {
+@media (max-width: 1024px), (pointer: coarse) {
   .home-desktop {
     display: none;
   }
