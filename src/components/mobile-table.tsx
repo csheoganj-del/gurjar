@@ -64,17 +64,28 @@ export function MobileTable() {
           data-index={index + 1}
           className="relative flex min-h-[100dvh] flex-col justify-end px-5 pb-24 pt-24"
         >
-          <div className="absolute inset-0 bg-ink-soft" />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: "url('/world/table-mobile.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/10" />
           <img
             src={product.objectImage}
             alt=""
-            className="pointer-events-none absolute inset-x-0 top-10 mx-auto h-[58vh] w-auto object-contain transition-transform duration-700"
+            className="pointer-events-none absolute inset-x-0 top-16 mx-auto h-[52vh] w-auto object-contain transition-[transform,filter] duration-700"
             style={{
-              transform: active === index + 1 ? "scale(1.04) translateY(-8px)" : "scale(0.92)",
+              transform:
+                active === index + 1
+                  ? "scale(1.04) translateY(-10px)"
+                  : "scale(0.94) translateY(0)",
               filter:
                 active === index + 1
-                  ? "drop-shadow(0 28px 40px rgba(0,0,0,0.55))"
-                  : "drop-shadow(0 10px 18px rgba(0,0,0,0.35))",
+                  ? "drop-shadow(18px 28px 22px rgba(12,8,4,0.48))"
+                  : "drop-shadow(8px 12px 10px rgba(12,8,4,0.38))",
             }}
           />
           <div className="relative">

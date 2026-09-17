@@ -20,12 +20,14 @@ export function InfiniteTable() {
   const [intro, setIntro] = useState(true);
   const reduced = usePrefersReducedMotion();
   const router = useRouter();
-
   const objects = useMemo(() => tableProducts, []);
 
   useEffect(() => {
     const enter = window.setTimeout(() => setReady(true), 80);
-    const leaveIntro = window.setTimeout(() => setIntro(false), reduced ? 0 : 2200);
+    const leaveIntro = window.setTimeout(
+      () => setIntro(false),
+      reduced ? 0 : 1800,
+    );
     return () => {
       window.clearTimeout(enter);
       window.clearTimeout(leaveIntro);
@@ -40,43 +42,58 @@ export function InfiniteTable() {
       const px = current.current.x;
       const py = current.current.y;
       if (plane.current) {
-        const rotX = 16 + (py - 0.5) * -6;
-        const rotY = (px - 0.5) * 8;
-        const tx = (px - 0.5) * -46;
-        const ty = (py - 0.5) * -28;
+        const rotX = 14 + (py - 0.5) * -5;
+        const rotY = (px - 0.5) * 6;
+        const tx = (px - 0.5) * -36;
+        const ty = (py - 0.5) * -22;
         plane.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
       }
       if (light.current) {
-        light.current.style.background = `radial-gradient(38% 32% at ${px * 100}% ${py * 100}%, rgba(243,236,225,0.14) 0%, transparent 55%), radial-gradient(120% 90% at 50% 40%, transparent 35%, rgba(8,6,4,0.42) 100%)`;
+        light.current.style.background = `radial-gradient(42% 34% at ${px * 100}% ${py * 100}%, rgba(243,236,225,0.1) 0%, transparent 52%), radial-gradient(120% 90% at 18% 12%, rgba(255,214,160,0.08) 0%, transparent 46%), radial-gradient(120% 90% at 50% 40%, transparent 42%, rgba(8,6,4,0.38) 100%)`;
       }
       const node = root.current;
       if (node) {
-        const cards = node.querySelectorAll<HTMLElement>("[data-object]");
         const rect = node.getBoundingClientRect();
-        cards.forEach((card) => {
-          const ox = Number(card.dataset.x);
-          const oy = Number(card.dataset.y);
+        const mx = current.current.x * rect.width;
+        const my = current.current.y * rect.height;
+        const radius = Math.max(rect.width, rect.height) * 0.2;
+        node.querySelectorAll<HTMLElement>("[data-slot]").forEach((slot) => {
+          const ox = Number(slot.dataset.x);
+          const oy = Number(slot.dataset.y);
           const cx = (ox / 100) * rect.width;
           const cy = (oy / 100) * rect.height;
-          const mx = current.current.x * rect.width;
-          const my = current.current.y * rect.height;
           const dist = Math.hypot(mx - cx, my - cy);
-          const radius = Math.max(rect.width, rect.height) * 0.2;
           const t = clamp(1 - dist / radius, 0, 1);
           const ease = t * t * (3 - 2 * t);
-          const scale = 1 + 0.46 * ease;
-          const lift = -28 * ease;
-          const depth = 48 * ease;
-          const tiltX = ((my - cy) / radius) * -6 * ease;
-          const tiltY = ((mx - cx) / radius) * 8 * ease;
-          card.style.transform = `translate3d(0, ${lift}px, ${depth}px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${scale})`;
-          card.style.zIndex = String(10 + Math.round(ease * 40));
-          const shadow = card.querySelector<HTMLElement>("[data-shadow]");
-          if (shadow) {
-            shadow.style.opacity = String(0.35 + ease * 0.65);
-            shadow.style.transform = `translateY(${12 + ease * 18}px) scale(${1 + ease * 0.25})`;
-            shadow.style.filter = `blur(${8 + ease * 10}px)`;
+          const scale = 1 + 0.38 * ease;
+          const lift = -22 * ease;
+          const depth = 36 * ease;
+          const tiltX = ((my - cy) / radius) * -5 * ease;
+          const tiltY = ((mx - cx) / radius) * 7 * ease;
+          const card = slot.querySelector<HTMLElement>("[data-object]");
+          const photo = slot.querySelector<HTMLElement>("[data-photo]");
+          const contact = slot.querySelector<HTMLElement>("[data-contact]");
+          const ambient = slot.querySelector<HTMLElement>("[data-ambient]");
+          if (card) {
+            card.style.transform = `translate3d(0, ${lift}px, ${depth}px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${scale})`;
+            card.style.zIndex = String(10 + Math.round(ease * 40));
           }
+          const shadowX = 10 + ease * 26;
+          const shadowY = 8 + ease * 18;
+          if (contact) {
+            contact.style.opacity = String(0.78 - ease * 0.34);
+            contact.style.filter = `blur(${5 + ease * 12}px)`;
+            contact.style.transform = `translate(${shadowX * 0.45}px, ${shadowY * 0.35}px) scale(${1.04 + ease * 0.32}, ${0.38 + ease * 0.2})`;
+          }
+          if (ambient) {
+            ambient.style.opacity = String(0.3 + ease * 0.12);
+            ambient.style.filter = `blur(${12 + ease * 22}px)`;
+            ambient.style.transform = `translate(${shadowX}px, ${shadowY}px) scale(${1.22 + ease * 0.5}, ${0.48 + ease * 0.26})`;
+          }
+          if (photo) {
+            photo.style.filter = `drop-shadow(${shadowX * 0.55}px ${shadowY * 0.7}px ${7 + ease * 16}px rgba(10,6,3,${0.42 - ease * 0.1}))`;
+          }
+          slot.style.zIndex = String(8 + Math.round(ease * 40));
         });
       }
       frame = window.requestAnimationFrame(tick);
@@ -108,16 +125,16 @@ export function InfiniteTable() {
       className="desktop-hide-cursor relative h-[100dvh] w-full overflow-hidden bg-ink"
     >
       <div
-        className="pointer-events-none absolute inset-0 z-30 bg-cover bg-center transition-[opacity,transform,filter] duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        className="pointer-events-none absolute inset-0 z-30 bg-cover bg-center transition-[opacity,transform,filter] duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
         style={{
           backgroundImage: "url('/world/table-composed.jpg')",
           opacity: intro ? 1 : 0,
-          transform: intro ? "scale(1.04)" : "scale(1.12)",
-          filter: intro ? "saturate(1.06)" : "blur(10px)",
+          transform: intro ? "scale(1.03)" : "scale(1.1)",
+          filter: intro ? "saturate(1.05)" : "blur(10px)",
         }}
         aria-hidden
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-ink/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/15 to-ink/25" />
         <div className="absolute bottom-10 left-8 right-8 sm:left-12">
           <p className="font-mono text-[10px] tracking-[0.42em] text-brass uppercase">
             Man Singh Gurjar
@@ -131,9 +148,9 @@ export function InfiniteTable() {
       <div className="table-stage absolute inset-0">
         <div
           ref={plane}
-          className="table-plane absolute -inset-[8%]"
+          className="table-plane absolute -inset-[7%]"
           style={{
-            transform: "rotateX(16deg)",
+            transform: "rotateX(14deg)",
             transition: ready ? undefined : "transform 1.4s var(--ease-out)",
           }}
         >
@@ -144,40 +161,44 @@ export function InfiniteTable() {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-          >
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(243,236,225,0.04),transparent)] mix-blend-screen" />
-          </div>
+          />
 
           {objects.map((product) => {
             const place = product.table!;
             return (
-              <button
+              <div
                 key={product.slug}
-                type="button"
-                data-object
-                data-hot
+                className="object-slot"
+                data-slot
                 data-x={place.x}
                 data-y={place.y}
-                onPointerEnter={() => setHover(product.slug)}
-                onFocus={() => setHover(product.slug)}
-                onClick={() => router.push(`/exhibit/${product.slug}`)}
-                className="object-card absolute -translate-x-1/2 -translate-y-1/2 appearance-none border-0 bg-transparent p-0"
                 style={{
                   left: `${place.x}%`,
                   top: `${place.y}%`,
                   width: `${place.w}%`,
                   rotate: `${place.rotate ?? 0}deg`,
                 }}
-                aria-label={`${product.name}, ${product.category}`}
               >
-                <span data-shadow className="contact-shadow" />
-                <img
-                  src={product.objectImage}
-                  alt=""
-                  className="relative w-full select-none"
-                  draggable={false}
-                />
-              </button>
+                <span className="object-shadow object-shadow-ambient" data-ambient />
+                <span className="object-shadow object-shadow-contact" data-contact />
+                <button
+                  type="button"
+                  data-object
+                  data-hot
+                  onPointerEnter={() => setHover(product.slug)}
+                  onFocus={() => setHover(product.slug)}
+                  onClick={() => router.push(`/exhibit/${product.slug}`)}
+                  className="object-card appearance-none border-0 p-0"
+                  aria-label={`${product.name}, ${product.category}`}
+                >
+                  <img
+                    data-photo
+                    src={product.objectImage}
+                    alt=""
+                    draggable={false}
+                  />
+                </button>
+              </div>
             );
           })}
         </div>
@@ -195,7 +216,9 @@ export function InfiniteTable() {
       >
         <div>
           <p className="font-mono text-[10px] tracking-[0.42em] text-brass uppercase">
-            {hoveredCategory ? `${hoveredCategory.index}  /  ${hoveredCategory.latin}` : "Approach an object"}
+            {hoveredCategory
+              ? `${hoveredCategory.index}  /  ${hoveredCategory.latin}`
+              : "Approach an object"}
           </p>
           <h1 className="font-serif text-4xl leading-none text-ivory sm:text-6xl">
             {hovered ? hovered.name : "The table is the map."}

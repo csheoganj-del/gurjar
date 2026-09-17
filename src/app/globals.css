@@ -167,10 +167,20 @@ img {
   will-change: transform;
 }
 
-.object-card {
+.object-slot {
+  position: absolute;
+  transform: translate(-50%, -50%);
   transform-style: preserve-3d;
-  transform-origin: 50% 85%;
+}
+
+.object-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  transform-style: preserve-3d;
+  transform-origin: 50% 88%;
   will-change: transform, filter;
+  background: transparent;
 }
 
 .object-card:focus-visible {
@@ -179,27 +189,46 @@ img {
 }
 
 .object-card img {
-  -webkit-mask-image: radial-gradient(
-    70% 70% at 50% 48%,
-    #000 52%,
-    transparent 78%
-  );
-  mask-image: radial-gradient(70% 70% at 50% 48%, #000 52%, transparent 78%);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
 }
 
-.contact-shadow {
+.object-shadow {
   position: absolute;
   left: 12%;
   right: 12%;
-  bottom: 6%;
-  height: 16%;
+  bottom: 2%;
+  height: 18%;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  transform-origin: 50% 50%;
+  will-change: transform, filter, opacity;
+}
+
+.object-shadow-contact {
   background: radial-gradient(
     ellipse at center,
-    rgba(20, 10, 4, 0.55) 0%,
-    transparent 70%
+    rgba(8, 5, 2, 0.62) 0%,
+    rgba(12, 8, 4, 0.28) 42%,
+    transparent 74%
   );
-  filter: blur(8px);
-  pointer-events: none;
+}
+
+.object-shadow-ambient {
+  left: 4%;
+  right: 4%;
+  bottom: -2%;
+  height: 28%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(18, 10, 4, 0.32) 0%,
+    transparent 72%
+  );
 }
 
 .exhibit-hero {
